@@ -41,6 +41,7 @@ Ext.define('User.view.UserWin', {
                                 xtype: 'textfield',
                                 name: 'password',
                                 fieldLabel: '用户密码',
+                                inputType: 'password',
                             },
                             {
                             	 xtype: 'button',
