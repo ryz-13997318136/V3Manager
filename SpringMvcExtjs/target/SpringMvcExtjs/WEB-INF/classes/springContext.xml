@@ -2,14 +2,32 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"  
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
     xsi:schemaLocation="
-http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-http://www.springframework.org/schema/context
-http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+     http://www.springframework.org/schema/mvc
+     http://www.springframework.org/schema/mvc/spring-mvc.xsd
+     http://www.springframework.org/schema/tx  
+     http://www.springframework.org/schema/tx/spring-tx-2.5.xsd  
+     http://www.springframework.org/schema/aop  
+     http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-autowire ="byName" >
     
     <!-- 搜索spring控件 -->
-    <context:component-scan base-package="com.test"></context:component-scan>
+  	 <context:component-scan base-package="com.ryz.cn"></context:component-scan> 
+  	 <mvc:annotation-driven />
+	<!--  <mvc:resources mapping="/extjs/**" location="/webapp/extjs/" /> -->
+	<!-- <mvc:default-servlet-handler/> -->
+	
+	
+	
+  <!--  <tx:annotation-driven transaction-manager="txManager"/> -->
+     
     <!-- 视图页面配置 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">
@@ -19,4 +37,76 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
             <value>.jsp</value>
         </property>
     </bean>
+    
+    <!-- Hibernate session factory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+     <!-- hibernate数据源设置 -->
+	    <property name="dataSource">
+	      <ref bean="dataSource"/>
+	    </property>
+	     <!-- hibernate属性设置 -->
+	    <property name="hibernateProperties">
+	       <props>
+	         <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+	         <prop key="hibernate.show_sql">true</prop>
+	       </props>
+	     </property>
+	    <!-- hibernate bean和table的映射 -->
+	     <property name="mappingResources">
+	         <list>
+	                <value>/hibernate/user.hbm.xml</value>
+	                <value>/hibernate/role.hbm.xml</value>
+	                <value>/hibernate/menu.hbm.xml</value>
+	                <value>/hibernate/userRole.hbm.xml</value>
+	                <value>/hibernate/roleMenu.hbm.xml</value>
+	         </list>
+	      </property> 
+    </bean>
+    
+    <!-- 支持事务处理 -->
+   <bean id="transactionInterceptor"
+       class="org.springframework.transaction.interceptor.TransactionInterceptor">
+     <property name="transactionManager" ref="transactionManager" />
+     <property name="transactionAttributes">
+        <props>
+         <prop key="save">PROPAGATION_REQUIRED</prop>
+        </props>
+     </property>
+    </bean>
+  
+    <bean id="transactionManager"
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+       <property name="dataSource" ref="dataSource" />
+       <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+  
+  <tx:annotation-driven transaction-manager="transactionManager" />
+  
+  <!--  <bean id="userBoProxy"
+     class="org.springframework.aop.framework.ProxyFactoryBean">
+     <property name="target" ref="userBo" />
+     <property name="interceptorNames">
+         <list>
+              <value>transactionInterceptor</value>
+         </list>
+     </property>
+  </bean> -->
+    <!-- 数据源配置 -->
+     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+         <property name="location">
+              <value>classpath:properties/database_env.properties</value>
+         </property>
+     </bean>
+     
+     <bean id="dataSource"
+              class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+         <property name="driverClassName" value="${jdbc.driverClassName}" />
+         <property name="url" value="${jdbc.url}" />
+         <property name="username" value="${jdbc.username}" />
+         <property name="password" value="${jdbc.password}" />
+     </bean>
+    
+    
+    
+    
 </beans>

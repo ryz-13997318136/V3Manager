@@ -94,7 +94,7 @@
     <!-- 数据源配置 -->
      <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
          <property name="location">
-              <value>classpath:properties/database.properties</value>
+              <value>classpath:properties/database_env.properties</value>
          </property>
      </bean>
      

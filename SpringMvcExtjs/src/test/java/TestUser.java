@@ -7,7 +7,7 @@ import com.ryz.cn.service.UserService;
 
 public class TestUser {
 
-	private ApplicationContext context = null;
+	/*private ApplicationContext context = null;
 	private UserService userService = null;
 	
 	{
@@ -23,5 +23,5 @@ public class TestUser {
     	user.setName("ryz");
     	user.setPassword("123");
     	userService.saveUser(user);
-    }
+    }*/
 }

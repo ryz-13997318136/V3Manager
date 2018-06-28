@@ -46,9 +46,9 @@ Ext.define('User.view.MainView', {
                                     text: '密码'
                                 }
                             ],
-                            selModel: Ext.create('Ext.selection.CheckboxModel', {
+                           /* selModel: Ext.create('Ext.selection.CheckboxModel', {
 
-                            })
+                            })*/
                         }
                     ]
                 }
