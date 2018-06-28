@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- 该文件详细的说明了这个User跟表user之间的关系 -->
+<hibernate-mapping>
+    <class name="com.ryz.cn.entity.Role" table="e_role" catalog="">
+        <id name="id" type="long">
+            <column name="ID" not-null="true" unique="true"  />
+        </id>
+        <property name="name" type="string">
+            <column name="NAME" length="255" />
+        </property>
+    </class>
+</hibernate-mapping>

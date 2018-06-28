@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- 该文件详细的说明了这个User跟表user之间的关系 -->
+<hibernate-mapping>
+    <class name="com.ryz.cn.entity.UserRole" table="e_user_role" catalog="">
+    
+       <!--  <id name="userId" type="long">
+            <column name="user_id" not-null="true" unique="true"  />
+        </id>
+        <property name="roleId" type="long">
+            <column name="role_id" />
+        </property> -->
+       
+       <composite-id>
+            <!-- key-property标签表示哪一些属性对应复合主键 -->
+            <key-property name="userId" column="user_id" type="long" ></key-property>
+            <key-property name="roleId" column="role_id" type="long" ></key-property>
+        </composite-id>
+       
+    </class>
+</hibernate-mapping>
